@@ -15,16 +15,33 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "digione.h"
-#include <QApplication>
-#include <QStyleFactory>
+#ifndef MBELIB_H_
+#define MBELIB_H_
 
-int main(int argc, char *argv[])
-{
-	QApplication::setStyle("fusion");
-    QApplication a(argc, argv);
-    DigiOne w;
-    w.show();
-
-    return a.exec();
+#include <stdlib.h>
+extern "C" {
+#include "mbelib/mbelib.h"
 }
+
+struct mbelibParms
+{
+    mbe_parms *m_cur_mp;
+    mbe_parms *m_prev_mp;
+    mbe_parms *m_prev_mp_enhanced;
+
+    mbelibParms()
+    {
+        m_cur_mp = (mbe_parms *) malloc(sizeof(mbe_parms));
+        m_prev_mp = (mbe_parms *) malloc(sizeof(mbe_parms));
+        m_prev_mp_enhanced = (mbe_parms *) malloc(sizeof(mbe_parms));
+    }
+
+    ~mbelibParms()
+    {
+        free(m_prev_mp_enhanced);
+        free(m_prev_mp);
+        free(m_cur_mp);
+    }
+};
+
+#endif /* MBELIB_H_ */
