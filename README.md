@@ -5,4 +5,5 @@ Digione is a software to monitor several digital voice platforms of ham radio DM
 ## Installation
 
 qmake
+
 make
