@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/dstar.png</file>
-        <file>images/dstar.jpg</file>
+        <file>images/dstar.ico</file>
     </qresource>
 </RCC>
