@@ -21,11 +21,11 @@ SOURCES += \
         mbelib/ambe.c \
         mbelib/mbedec.cpp \
         mbelib/mbeenc.cc \
-        common/CRCenc.cpp \
-        common/audioengine.cpp \
-        common/chamming.cpp \
-        common/httpmanager.cpp \
-        common/serialambe.cpp \
+        Common/CRCenc.cpp \
+        Common/audioengine.cpp \
+        Common/chamming.cpp \
+        Common/httpmanager.cpp \
+        Common/serialambe.cpp \
         dmr/DMRData.cpp \
         dmr/dmrcodec.cpp \
         dmr/dmrcontrol.cpp \
@@ -89,10 +89,10 @@ HEADERS += \
         mbelib/mbedec.h \
         mbelib/mbeenc.h \
         mbelib/mbelib_parms.h \
-        common/CRCenc.h \
-        common/serialambe.h \
-        common/audioengine.h \
-        common/chamming.h \
+        Common/CRCenc.h \
+        Common/serialambe.h \
+        Common/audioengine.h \
+        Common/chamming.h \
         dmr/DMRData.h \
         dmr/DMRDefines.h \
         dmr/dmrcodec.h \
@@ -115,7 +115,7 @@ HEADERS += \
         codec2/qbase.h \
         codec2/quantise.h \
         digione.h \
-        common/httpmanager.h \
+        Common/httpmanager.h \
         imbe_vocoder/aux_sub.h \
         imbe_vocoder/basic_op.h \
         imbe_vocoder/ch_decode.h \
