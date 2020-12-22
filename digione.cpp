@@ -14,6 +14,9 @@ DigiOne::DigiOne(QWidget *parent):
     dcs_muted = false;
 
     config_path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+#ifndef Q_OS_WIN
+    config_path += "/digione";
+#endif
     if(!QDir(config_path).exists()){
         QDir().mkdir(config_path);
     }
