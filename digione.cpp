@@ -579,9 +579,9 @@ void DigiOne::process_dmr_connect(){
 
         QString hostname = ui->dmrservers->currentText().simplified();
         QString callsign = ui->dmrcallsign->text().toUpper();
-        int dmrid = ui->dmrid->text().toUInt();
+        uint32_t dmrid = ui->dmrid->text().toUInt();
         QString dmr_password = ui->password->text();
-        int dmr_destid = ui->talkgroup->text().toUInt();
+        uint32_t dmr_destid = ui->talkgroup->text().toUInt();
         QString dmr_repeater = ui->dmrid->text() + ui->essid->text();
 
         if(hostname.startsWith("DMR+")){
@@ -720,6 +720,7 @@ void DigiOne::update_sound_dcs_data(){
 void DigiOne::process_dmr_plus_connect(){
     QString dmr_options;
     if(dmr_plus_connection_status == DMR_PLUS_CONNECTED_RW || dmr_plus_connection_status == DMR_PLUS_CONNECTING){
+        m_dmr_plus->send_disconnect();
         m_modethread_dmr_plus->quit();
         dmr_plus_connection_status = DMR_PLUS_DISCONNECTED;
         ui->dmrPlusConnect->setText("Connectar");
@@ -742,9 +743,9 @@ void DigiOne::process_dmr_plus_connect(){
 
         QString hostname = ui->dmrPlusServers->currentText().simplified();
         QString callsign = ui->dmrplusCallsign->text().toUpper();
-        int dmrid = ui->dmridplus->text().toUInt();
+        uint32_t dmrid = ui->dmridplus->text().toUInt();
         QString dmr_password = ui->passwordplus->text();
-        int dmr_destid = ui->talkgroupplus->text().toUInt();
+        uint32_t dmr_destid = ui->talkgroupplus->text().toUInt();
         QString dmr_repeater = ui->dmridplus->text() + ui->essidplus->text();
 
         if(hostname.startsWith("DMR+")){

@@ -12,6 +12,13 @@ DEFINES += USE_SWTX
 CONFIG += c++11
 
 SOURCES += \
+        dmr/DMRFullLC.cpp \
+        dmr/DMRLC.cpp \
+        dmr/DMRShortLC.cpp \
+        dmr/DMRSlotType.cpp \
+        dmr/Log.cpp \
+        dmr/QR1676.cpp \
+        dmr/Utils.cpp \
         mbelib/ambe3600x2400.c \
         mbelib/ambe3600x2450.c \
         mbelib/ecc.c \
@@ -77,6 +84,13 @@ SOURCES += \
         digione.cpp
 
 HEADERS += \
+        dmr/DMRFullLC.h \
+        dmr/DMRLC.h \
+        dmr/DMRShortLC.h \
+        dmr/DMRSlotType.h \
+        dmr/Log.h \
+        dmr/QR1676.h \
+        dmr/Utils.h \
         mbelib/ambe3600x2400_const.h \
         mbelib/ambe3600x2450_const.h \
         mbelib/ecc_const.h \
