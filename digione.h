@@ -234,6 +234,7 @@ private slots:
     void download_file_dcs(QString f);
     void download_file_dmr_ids(QString f);
     void load_initial_settings();
+    void showTime();
     void process_settings(QString path);
     void about();
     void updateTime();

@@ -41,7 +41,7 @@ class DMRCodec : public QObject
 {
     Q_OBJECT
 public:
-    DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t m_repeaterId, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout);
+    DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t m_repeaterId, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout, QString hostname);
     ~DMRCodec();
     unsigned char * get_eot();
     uint8_t get_status(){ return m_status; }
@@ -83,7 +83,6 @@ private slots:
     void swrx_state_changed(int s) {m_hwrx = !s; }
     void swtx_state_changed(int s) {m_hwtx = !s; }
     void send_frame();
-    void createVoiceFrame(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, uint8_t voiceSeq, uint8_t * ambe72Data, FLCO flco);
     void createVoiceHeader(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, FLCO flco);
     void createVoiceTerminator(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, FLCO flco);
     void in_audio_vol_changed(qreal);

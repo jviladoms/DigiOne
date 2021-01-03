@@ -50,7 +50,7 @@ extern cst_voice * register_cmu_us_rms(const char *);
 }
 #endif
 
-DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t essid, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout) :
+DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t essid, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout, QString hostname) :
     m_callsign(callsign),
     m_dmrid(dmrid),
     m_password(password),
@@ -72,7 +72,8 @@ DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString o
     m_hwtx(false),
     m_pc(false),
     m_audioin(audioin),
-    m_audioout(audioout)
+    m_audioout(audioout),
+    m_hostname(hostname)
 {
     m_dmrcnt = 0;
     m_colorcode = 1;
@@ -168,7 +169,7 @@ void DMRCodec::process_udp()
             char longitude[20U];
             ::sprintf(longitude, "00.000000");
             ::sprintf(buffer + 8U, "%-8.8s%09u%09u%02u%02u%8.8s%9.9s%03d%-20.20s%-19.19s%c%-124.124s%-40.40s%-40.40s", m_callsign.toStdString().c_str(),
-                    438800000, 438800000, 1, 1, latitude, longitude, 0, "DigiOne, nowhere","ABC", '4', "www.qrz.com", "20200101", "MMDVM_DVMEGA");
+                    438800000, 438800000, 1, 1, latitude, longitude, 0, "DigiOne v1.2,nowhere","ABC", '4', "www.qrz.com", "20200101", "MMDVM_DVMEGA");
             out.append(buffer, 302);
             m_udp->writeDatagram(out, m_address, m_port);
             break;
@@ -407,7 +408,6 @@ void DMRCodec::tx_management(){
 
 void DMRCodec::start_tx()
 {
-    qDebug() << "start_tx() " << m_ttsid << " " << m_ttstext << " " << m_txdstid;
     m_tx = true;
     m_txcnt = 0;
     m_streamid = rand()+1;
@@ -418,17 +418,9 @@ void DMRCodec::start_tx()
     m_rxcnt = 0;
     m_ttscnt = 0;
     m_transmitcnt = 0;
-    //m_srcid = m_dmrid;
     if(!m_txtimer->isActive()){
-        //fprintf(stderr, "press_tx()\n");
-        //audio_buffer.open(QBuffer::ReadWrite|QBuffer::Truncate);
-        //audiofile.setFileName("audio.pcm");
-        //audiofile.open(QIODevice::WriteOnly | QIODevice::Truncate);
-        //if(m_ttsid == 0){
-            m_audio->set_input_buffer_size(640);
-            m_audio->start_capture();
-            //audioin->start(&audio_buffer);
-        //}
+        m_audio->set_input_buffer_size(640);
+        m_audio->start_capture();
         m_txtimer->start(19);
     }
 }
@@ -443,13 +435,9 @@ void DMRCodec::transmit()
     uint8_t ambe[72];
     int16_t pcm[160];
 
-    //if(m_ttsid == 0){
-        if(m_audio->read(pcm, 160)){
-        }
-        else{
-            return;
-        }
-    //}
+    if(!m_audio->read(pcm, 160)){
+        return;
+    }
 
     if(m_hwtx){
         m_ambedev->encode(pcm);
@@ -482,41 +470,36 @@ void DMRCodec::send_frame()
         set_calltype(0);
     }
     if(m_tx){
-        //memset(m_dmrFrame, 0, 53);
         if(!m_dmrcnt){
-            qDebug() << "encode header m_dmrcnt: " << m_dmrcnt;
-            //encode_header();
-            createVoiceHeader(m_dmrid, m_txdstid, m_essid, m_dmrFrame, m_dmrcnt, m_streamid, m_flco);
+            if(!m_hostname.startsWith("XLX")){
+                createVoiceHeader(m_dmrid, m_txdstid, m_essid, m_dmrFrame, m_dmrcnt, m_streamid, m_flco);
+            } else {
+                encode_header();
+                build_frame();
+            }
         }
         else{
-            //::memcpy(m_dmrFrame + 20U, m_ambe, 13U);
-            //m_dmrFrame[33U] = m_ambe[13U] & 0xF0U;
-            //m_dmrFrame[39U] = m_ambe[13U] & 0x0FU;
-            //::memcpy(m_dmrFrame + 40U, &m_ambe[14U], 13U);
-            //encode_data();
-            createVoiceFrame(m_dmrid, m_txdstid, m_essid, m_dmrFrame, m_dmrcnt, m_streamid, m_dmrcnt, m_ambe, m_flco);
+            ::memcpy(m_dmrFrame + 20U, m_ambe, 13U);
+            m_dmrFrame[33U] = m_ambe[13U] & 0xF0U;
+            m_dmrFrame[39U] = m_ambe[13U] & 0x0FU;
+            ::memcpy(m_dmrFrame + 40U, &m_ambe[14U], 13U);
+            encode_data();
+            build_frame();
         }
-        //build_frame();
-        ++m_dmrcnt;
-        qDebug() << "add 1 after build frame m_dmrcnt: " << m_dmrcnt;
-
         txdata.append((char *)m_dmrFrame, 55);
         m_udp->writeDatagram(txdata, m_address, m_port);
+        ++m_dmrcnt;
     }
     else{
-        //fprintf(stderr, "DMR TX stopped\n");
-        //encode_eot();
-        //build_frame();
         createVoiceTerminator(m_dmrid, m_txdstid, m_essid, m_dmrFrame, m_dmrcnt, m_streamid, m_flco);
         txdata.append((char *)m_dmrFrame, 55);
         m_udp->writeDatagram(txdata, m_address, m_port);
         m_dmrcnt = 0;
         m_ttscnt = 0;
         m_txtimer->stop();
-        //if(m_ttsid == 0){
-            m_audio->stop_capture();
-        //}
+        m_audio->stop_capture();
     }
+
 #ifdef DEBUG
     fprintf(stderr, "SEND:%d:%d: ", txdata.size(), m_transmitcnt);
     for(int i = 0; i < txdata.size(); ++i){
@@ -527,84 +510,12 @@ void DMRCodec::send_frame()
 #endif
 }
 
-void DMRCodec::createVoiceFrame(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, uint8_t voiceSeq, uint8_t * ambe72Data, FLCO flco)
+void DMRCodec::encode_header()
 {
-    uint8_t *dmrData = dataOut;
-    uint8_t *p;
-
-    dmrData[0] = 'D';
-    dmrData[1] = 'M';
-    dmrData[2] = 'R';
-    dmrData[3] = 'D';
-
-    dmrData[4] = seq;
-
-    //src
-    p = (uint8_t *) &src;
-    dmrData[5]= (uint8_t) p[2];
-    dmrData[6]= (uint8_t) p[1];
-    dmrData[7]= (uint8_t) p[0];
-
-    //dst
-    p = (uint8_t *) &dst;
-    dmrData[8]= (uint8_t) p[2];
-    dmrData[9]= (uint8_t) p[1];
-    dmrData[10]= (uint8_t) p[0];
-
-    //repeaterid
-    p = (uint8_t *) &rpt_id;
-    dmrData[11]= (uint8_t) p[3];
-    dmrData[12]= (uint8_t) p[2];
-    dmrData[13]= (uint8_t) p[1];
-    dmrData[14]= (uint8_t) p[0];
-
-    //bit fields
-    voiceSeq = voiceSeq & 0x0F;
-    voiceSeq = voiceSeq % 6;
-    if (voiceSeq == 0)
-    {
-        voiceSeq = 0x10;
-    }
-    dmrData[15]= 0x80 + voiceSeq;
-
-    if (flco != 0)
-    {
-        dmrData[15] |= 0x40;
-    }
-
-    //StreamId
-    dmrData[16]= (streamId >> 24) & 0xFF;
-    dmrData[17]= (streamId >> 16) & 0xFF;
-    dmrData[18]= (streamId >> 8) & 0xFF;
-    dmrData[19]= (streamId >> 0) & 0xFF;
-
-    //13 first bytes
-    memcpy(&dmrData[20], ambe72Data, 13);
-
-    //half bytes
-    dmrData[33] = ambe72Data[13] & 0xF0;
-    dmrData[39] |= ambe72Data[13] & 0x0F;
-
-    //last 13;
-    memcpy(&dmrData[40], &ambe72Data[14], 13);
-
-    //TODO: talk alias EMB, other syncs...
-    //SYNC MASK
-    switch (voiceSeq)
-    {
-        case 0:
-            for (int i = 0; i<7; i++)
-            {
-                dmrData[20 + 13 + i] |= MS_SOURCED_AUDIO_SYNC[i];
-            }
-            break;
-        default:
-            break;
-    }
-
-    //memcpy(dataOut, dmrData, 53);
+    addDMRDataSync(m_dmrFrame+20, 0);
+    m_dataType = DT_VOICE_LC_HEADER;
+    full_lc_encode(m_dmrFrame+20, DT_VOICE_LC_HEADER);
 }
-
 
 void DMRCodec::createVoiceHeader(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, FLCO flco)
 {
@@ -618,62 +529,52 @@ void DMRCodec::createVoiceHeader(uint32_t src, uint32_t dst, uint32_t rpt_id, ui
 
     dmrData[4] = seq;
 
-    //src
     p = (uint8_t *) &src;
     dmrData[5]= (uint8_t) p[2];
     dmrData[6]= (uint8_t) p[1];
     dmrData[7]= (uint8_t) p[0];
 
-    //dst
     p = (uint8_t *) &dst;
     dmrData[8]= (uint8_t) p[2];
     dmrData[9]= (uint8_t) p[1];
     dmrData[10]= (uint8_t) p[0];
 
-    //repeaterid
     p = (uint8_t *) &rpt_id;
     dmrData[11]= (uint8_t) p[3];
     dmrData[12]= (uint8_t) p[2];
     dmrData[13]= (uint8_t) p[1];
     dmrData[14]= (uint8_t) p[0];
 
-    //bit fields
-    dmrData[15]= 0xA1; //data2 frame 2 group call slot 0 voice header
+    dmrData[15]= 0xA1;
 
     if (flco != 0)
     {
         dmrData[15] |= 0x40;
     }
 
-    //StreamId
     dmrData[16]= (streamId >> 24) & 0xFF;
     dmrData[17]= (streamId >> 16) & 0xFF;
     dmrData[18]= (streamId >> 8) & 0xFF;
     dmrData[19]= (streamId >> 0) & 0xFF;
 
-    //LC data
     CDMRLC lc;
     CDMRFullLC cDmrFullLc;
 
-    memset(&lc, 0, sizeof(CDMRLC));// clear automatic variable
-
+    memset(&lc, 0, sizeof(CDMRLC));
     lc.setSrcId(src);
     lc.setDstId(dst);
-    lc.setFLCO(flco);// Private or group call
+    lc.setFLCO(flco);
 
-    // Encode the src and dst Ids etc
     cDmrFullLc.encode(lc, &dmrData[20], DT_VOICE_LC_HEADER);
 
     for (uint8_t i = 0U; i < 8U; i++)
     {
         dmrData[i + 20+ 12U] = (dmrData[i + 20 + 12U] & ~LC_SYNC_MASK_FULL[i]) | VOICE_LC_SYNC_FULL[i];
     }
-    //memcpy(dataOut, dmrData, 53);
 }
 
 void DMRCodec::createVoiceTerminator(uint32_t src, uint32_t dst, uint32_t rpt_id, uint8_t *dataOut, uint8_t seq, uint32_t streamId, FLCO flco)
 {
-
     uint8_t *dmrData = dataOut;
     memset(dmrData, 0, 53);
     uint8_t *p;
@@ -685,60 +586,48 @@ void DMRCodec::createVoiceTerminator(uint32_t src, uint32_t dst, uint32_t rpt_id
 
     dmrData[4] = seq;
 
-    //src
     p = (uint8_t *) &src;
     dmrData[5]= (uint8_t) p[2];
     dmrData[6]= (uint8_t) p[1];
     dmrData[7]= (uint8_t) p[0];
 
-    //dst
     p = (uint8_t *) &dst;
     dmrData[8]= (uint8_t) p[2];
     dmrData[9]= (uint8_t) p[1];
     dmrData[10]= (uint8_t) p[0];
 
-    //repeaterid
     p = (uint8_t *) &rpt_id;
     dmrData[11]= (uint8_t) p[3];
     dmrData[12]= (uint8_t) p[2];
     dmrData[13]= (uint8_t) p[1];
     dmrData[14]= (uint8_t) p[0];
 
-    //bit fields
-    dmrData[15]= 0xA2; //data2 frame 2 group call slot 0 voice terminator
+    dmrData[15]= 0xA2;
 
     if (flco != 0)
     {
         dmrData[15] |= 0x40;
     }
 
-    //StreamId
     dmrData[16]= (streamId >> 24) & 0xFF;
     dmrData[17]= (streamId >> 16) & 0xFF;
     dmrData[18]= (streamId >> 8) & 0xFF;
     dmrData[19]= (streamId >> 0) & 0xFF;
 
-    //LC data
     CDMRLC lc;
     CDMRFullLC cDmrFullLc;
 
-    memset(&lc, 0, sizeof(CDMRLC));// clear automatic variable
-
+    memset(&lc, 0, sizeof(CDMRLC));
     lc.setSrcId(src);
     lc.setDstId(dst);
-    lc.setFLCO(flco);// Private or group call
-
-    // Encode the src and dst Ids etc
+    lc.setFLCO(flco);
     cDmrFullLc.encode(lc, &dmrData[20], DT_TERMINATOR_WITH_LC);
 
     for (uint8_t i = 0U; i < 8U; i++)
     {
         dmrData[i + 20+ 12U] = (dmrData[i + 20 + 12U] & ~LC_SYNC_MASK_FULL[i]) | TERMINATOR_LC_SYNC_FULL[i];
     }
-
-    //memcpy(dataOut, dmrData, 53);
 }
-
 
 void DMRCodec::build_frame()
 {
@@ -754,10 +643,10 @@ void DMRCodec::build_frame()
     m_dmrFrame[8U]  = m_txdstid >> 16;
     m_dmrFrame[9U]  = m_txdstid >> 8;
     m_dmrFrame[10U] = m_txdstid >> 0;
-    m_dmrFrame[11U]  = m_essid  >> 24;
-    m_dmrFrame[12U]  = m_essid  >> 16;
-    m_dmrFrame[13U]  = m_essid  >> 8;
-    m_dmrFrame[14U]  = m_essid  >> 0;
+    m_dmrFrame[11U] = m_essid  >> 24;
+    m_dmrFrame[12U] = m_essid  >> 16;
+    m_dmrFrame[13U] = m_essid  >> 8;
+    m_dmrFrame[14U] = m_essid  >> 0;
 
     m_dmrFrame[15U] = (m_slot == 1U) ? 0x00U : 0x80U;
     m_dmrFrame[15U] |= (m_flco == FLCO_GROUP) ? 0x00U : 0x40U;
@@ -771,71 +660,15 @@ void DMRCodec::build_frame()
     }
 
     m_dmrFrame[4U] = m_dmrcnt;
-
-    //unsigned int streamId = rand()+1;
-    qDebug() << "m_streamid: " << m_streamid;
     ::memcpy(m_dmrFrame + 16U, &m_streamid, 4U);
 
     m_dmrFrame[53U] = 0; //data.getBER();
     m_dmrFrame[54U] = 0; //data.getRSSI();
 }
 
-void DMRCodec::encode_header()
-{
-    /*full_lc_encode(m_dmrFrame+22, DT_VOICE_LC_HEADER);
-    getData(m_dmrFrame+22);
-    addDMRDataSync(m_dmrFrame+22, 0);
-    m_dataType = DT_VOICE_LC_HEADER;
-    m_dmrFrame[20U] = TAG_DATA;
-    m_dmrFrame[21U] = 0x00U;*/
-
-    CDMRLC lc;
-    CDMRFullLC cDmrFullLc;
-
-    memset(&lc, 0, sizeof(CDMRLC));// clear automatic variable
-
-    lc.setSrcId(m_srcid);
-    lc.setDstId(m_dstid);
-    lc.setFLCO(m_flco);
-
-    cDmrFullLc.encode(lc, &m_dmrFrame[20], DT_VOICE_LC_HEADER);
-
-    for (uint8_t i = 0U; i < 8U; i++)
-    {
-        m_dmrFrame[i + 20+ 12U] = (m_dmrFrame[i + 20 + 12U] & ~LC_SYNC_MASK_FULL[i]) | VOICE_LC_SYNC_FULL[i];
-    }
-}
-
-void DMRCodec::encode_eot(){
-    /*full_lc_encode(m_dmrFrame+22, DT_TERMINATOR_WITH_LC);
-    getData(m_dmrFrame+22);
-    addDMRDataSync(m_dmrFrame+22, 0);
-    m_dataType = DT_TERMINATOR_WITH_LC;
-    m_dmrFrame[20U] = TAG_EOT;
-    m_dmrFrame[21U] = 0x00U;*/
-
-    CDMRLC lc;
-    CDMRFullLC cDmrFullLc;
-
-    memset(&lc, 0, sizeof(CDMRLC));// clear automatic variable
-
-    lc.setSrcId(m_srcid);
-    lc.setDstId(m_dstid);
-    lc.setFLCO(m_flco);
-
-    cDmrFullLc.encode(lc, &m_dmrFrame[20], DT_TERMINATOR_WITH_LC);
-
-    for (uint8_t i = 0U; i < 8U; i++)
-    {
-        m_dmrFrame[i + 20+ 12U] = (m_dmrFrame[i + 20 + 12U] & ~LC_SYNC_MASK_FULL[i]) | TERMINATOR_LC_SYNC_FULL[i];
-    }
-}
-
 void DMRCodec::encode_data()
 {
     unsigned int n_dmr = (m_dmrcnt - 1) % 6U;
-
-    qDebug() << "encode data 1 m_dmrcnt: " << m_dmrcnt;
     if (!n_dmr) {
         m_dataType = DT_VOICE_SYNC;
         addDMRAudioSync(m_dmrFrame+20, 0);

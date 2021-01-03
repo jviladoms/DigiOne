@@ -184,4 +184,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     digione.qrc
 
-DISTFILES +=
+DISTFILES += \
+    images/DigiOne_logo.jpeg
