@@ -50,7 +50,7 @@ extern cst_voice * register_cmu_us_rms(const char *);
 }
 #endif
 
-DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t essid, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout, QString hostname) :
+DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString options, uint32_t essid, uint32_t dstid, QString host, uint32_t port, QString vocoder, QString audioin, QString audioout, QString hostname, QString poblacio, QString latitud, QString longitud) :
     m_callsign(callsign),
     m_dmrid(dmrid),
     m_password(password),
@@ -73,7 +73,10 @@ DMRCodec::DMRCodec(QString callsign, uint32_t dmrid, QString password, QString o
     m_pc(false),
     m_audioin(audioin),
     m_audioout(audioout),
-    m_hostname(hostname)
+    m_hostname(hostname),
+    m_longitud(longitud),
+    m_latitud(latitud),
+    m_poblacio(poblacio)
 {
     m_dmrcnt = 0;
     m_colorcode = 1;
@@ -164,12 +167,17 @@ void DMRCodec::process_udp()
 
             m_status = DMR_CONF;
             char latitude[20U];
-            ::sprintf(latitude, "00.00000");
+
+            ::sprintf(latitude, m_latitud.toStdString().c_str());
             fprintf(stdout, "init configuration");
             char longitude[20U];
-            ::sprintf(longitude, "00.000000");
+            ::sprintf(longitude, m_longitud.toStdString().c_str());
+            char location[50];
+            ::sprintf(location, "D1 v1.2, ");
+            ::sprintf(location + 9U, m_poblacio.toStdString().c_str());
+
             ::sprintf(buffer + 8U, "%-8.8s%09u%09u%02u%02u%8.8s%9.9s%03d%-20.20s%-19.19s%c%-124.124s%-40.40s%-40.40s", m_callsign.toStdString().c_str(),
-                    438800000, 438800000, 1, 1, latitude, longitude, 0, "DigiOne v1.2,nowhere","ABC", '4', "www.qrz.com", "20200101", "MMDVM_DVMEGA");
+                    438800000, 438800000, 1, 1, latitude, longitude, 0, location, "ABC", '4', "www.qrz.com", "20200101", "MMDVM_DVMEGA");
             out.append(buffer, 302);
             m_udp->writeDatagram(out, m_address, m_port);
             break;
@@ -659,7 +667,7 @@ void DMRCodec::build_frame()
         m_dmrFrame[15U] |= (0x20U | m_dataType);
     }
 
-    m_dmrFrame[4U] = m_dmrcnt;
+    m_dmrFrame[4U] = m_dmrcnt - 1;
     ::memcpy(m_dmrFrame + 16U, &m_streamid, 4U);
 
     m_dmrFrame[53U] = 0; //data.getBER();

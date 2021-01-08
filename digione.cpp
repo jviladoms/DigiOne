@@ -26,11 +26,17 @@ DigiOne::DigiOne(QWidget *parent):
     discover_vocoders();
     process_dmr_hosts();
     process_ysf_hosts();
+    qDebug() << "m17";
     process_m17_hosts();
+        qDebug() << "dcs";
     process_dcs_hosts();
+        qDebug() << "dmr_id";
     process_dmr_ids();
+     qDebug() << "initial settings";
     load_initial_settings();
+         qDebug() << "minimum size";
     this->window()->setMinimumSize(1800, 1200);
+          qDebug() << "maximized";
     QWidget::showMaximized();
 }
 
@@ -50,6 +56,7 @@ void DigiOne::showTime()
     QTime time = QTime::currentTime();
     QString text = time.toString("hh:mm:ss");
     ui->lcdNumber->display(text);
+    //ui->label_2->setText(text);
 }
 
 void DigiOne::process_settings(QString path)
@@ -158,6 +165,15 @@ void DigiOne::process_settings(QString path)
                 }
                 if(sl.at(0) == "USRTXT"){
                     ui->usertext->setText(sl.at(1).simplified());
+                }
+                if(sl.at(0) == "LOCATION"){
+                    ui->poblacio->setText(sl.at(1).simplified());
+                }
+                if(sl.at(0) == "LATITUDE"){
+                    ui->latitud->setText(sl.at(1).simplified());
+                }
+                if(sl.at(0) == "LONGITUDE"){
+                    ui->longitud->setText(sl.at(1).simplified());
                 }
             }
         }
@@ -353,11 +369,11 @@ void DigiOne::about()
     QMessageBox::about(this, tr("Sobre DigiOne v1.2"),
                        tr("Aquesta es una distribució de l'eina DigiOne creada per Jordi Viladoms EA3IHG. \n\n S'ha creat a partir "
                           "d'un fork de l'eina dudestar i donant resposta de les funcionalitats i millores suggerides per radioaficionats de Catalunya.\n "
-                          "Agraïment especial als companys Josep EA3FZS i Xavier EA3W per les hores de proves que han fet de l'aplicació i al company Jordi EA3HSL per el logo de l'aplicació. \n\n"
-                          "Aquest programa és programari lliure; el podeu redistribuir i / o modificar sota els termes del GNU General Public "
-                          "license publicada per la Free Software Foundation;\n Aquest programa es distribueix amb l'esperança que serà útil, però SENSE CAP GARANTIA;"
-                          "sense ni tan sols la garantia implícita de COMERCIALITZACIÓ o IDONEITAT PER A FINALITAT PARTICULAR.\n Vegeu la llicència pública general de GNU per més detalls."
-                          "Hauríeu d'haver rebut una còpia del GNU Llicència pública general juntament amb aquest programa.Si no, consulteu <http://www.gnu.org/licenses/>").arg(VERSION_NUMBER));
+                          "Agraïment especial als companys Josep EA3FZS, Xavier EA3W per les hores de proves que han fet de l'aplicació, al company Jordi EA3FET pels seus consells de GUI i al company Jordi EA3HSL per el logo de l'aplicació. \n\n"
+                          "Aquest programa és programari lliure. El podeu redistribuir i/o modificar sota els termes del GNU General Public "
+                          "license publicada per la Free Software Foundation.\n Aquest programa es distribueix amb l'esperança que serà útil, però SENSE CAP GARANTIA,"
+                          " sense ni tan sols la garantia implícita de COMERCIALITZACIÓ o IDONEITAT PER A FINALITAT PARTICULAR.\n Vegeu la llicència pública general de GNU per més detalls."
+                          "Hauríeu d'haver rebut una còpia del GNU Llicència pública general juntament amb aquest programa. Si no, consulteu <http://www.gnu.org/licenses/>").arg(VERSION_NUMBER));
 
 }
 
@@ -501,6 +517,9 @@ void DigiOne::save_settings(QString path) {
     stream << "RPTR1:" << ui->rptr1->text().simplified() << ENDLINE;
     stream << "RPTR2:" << ui->rptr2->text().simplified() << ENDLINE;
     stream << "USRTXT:" << ui->usertext->text() << ENDLINE;
+    stream << "LOCATION:" << ui->poblacio->text() << ENDLINE;
+    stream << "LATITUDE:" << ui->latitud->text() << ENDLINE;
+    stream << "LONGITUDE:" << ui->longitud->text() << ENDLINE;
     f.close();
 }
 
@@ -626,10 +645,10 @@ void DigiOne::process_dmr_connect(){
 
         if(hostname.startsWith("DMR+")){
            dmr_options = ui->dmrOptions->text();
-           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(),hostname);
+           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         } else {
            dmr_options = "";
-           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(),hostname);
+           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         }
 
         m_modethread_dmr = new QThread;
@@ -796,10 +815,10 @@ void DigiOne::process_dmr_plus_connect(){
 
         if(hostname.startsWith("DMR+")){
            dmr_options = ui->dmrOptionsPlus->text();
-           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(),hostname);
+           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         } else {
            dmr_options = "";
-           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(),hostname);
+           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         }
 
         m_modethread_dmr_plus = new QThread;
@@ -1012,7 +1031,7 @@ void DigiOne::tgid_text_changed_plus(QString s)
 void DigiOne::dmrChangeButtonColor(){
     dmrTimerReceived.stop();
     ui->dmrLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrLast->setText("ULTIMA RECEPCIÓ");
+    ui->dmrLast->setText("Ultima recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
@@ -1022,7 +1041,7 @@ void DigiOne::dmrChangeButtonColor(){
 void DigiOne::dmrPlusChangeButtonColor(){
     dmrPlusTimerReceived.stop();
     ui->dmrPlusLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrPlusLast->setText("ULTIMA RECEPCIÓ");
+    ui->dmrPlusLast->setText("Ultima recepció");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -1032,7 +1051,7 @@ void DigiOne::dmrPlusChangeButtonColor(){
 void DigiOne::ysfChangeButtonColor(){
     ysfTimerReceived.stop();
     ui->ysfLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->ysfLast->setText("ULTIMA RECEPCIÓ");
+    ui->ysfLast->setText("Ultima recepció");
     ui->dmrPlusLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -1042,7 +1061,7 @@ void DigiOne::ysfChangeButtonColor(){
 void DigiOne::dcsChangeButtonColor(){
     dcsTimerReceived.stop();
     ui->dcsLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dcsLast->setText("ULTIMA RECEPCIÓ");
+    ui->dcsLast->setText("Ultima recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->m17Last->setText("");
@@ -1052,7 +1071,7 @@ void DigiOne::dcsChangeButtonColor(){
 void DigiOne::m17ChangeButtonColor(){
     m17TimerReceived.stop();
     ui->m17Label->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->m17Last->setText("ULTIMA RECEPCIÓ");
+    ui->m17Last->setText("Ultima recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
