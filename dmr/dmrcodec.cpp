@@ -166,12 +166,21 @@ void DMRCodec::process_udp()
             buffer[7] = (m_essid  >> 0) & 0xff;
 
             m_status = DMR_CONF;
-            char latitude[20U];
 
-            ::sprintf(latitude, m_latitud.toStdString().c_str());
-            fprintf(stdout, "init configuration");
+            if(m_latitud.size() == 0){
+                qDebug() << "mlatitud a zero";
+                m_latitud = "00.00000";
+            }
+            if(m_longitud.size() == 0){
+                qDebug() << "m_longitud a zero";
+                m_longitud = "00.00000";
+            }
+
+            char latitude[20U];
             char longitude[20U];
-            ::sprintf(longitude, m_longitud.toStdString().c_str());
+            sprintf(latitude, "%2.5f", m_latitud.toFloat());
+            sprintf(longitude, "%2.6f", m_longitud.toFloat());
+
             char location[50];
             ::sprintf(location, "D1 v1.2, ");
             ::sprintf(location + 9U, m_poblacio.toStdString().c_str());
