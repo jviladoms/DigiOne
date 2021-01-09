@@ -1392,7 +1392,7 @@
   </action>
   <action name="actionUpdateFiles">
    <property name="text">
-    <string>Actualitza fitxers</string>
+    <string>Actualitzar fitxers</string>
    </property>
   </action>
  </widget>

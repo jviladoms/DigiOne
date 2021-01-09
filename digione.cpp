@@ -401,21 +401,21 @@ void DigiOne::start(bool checked) {
       qDebug() << "object name " + button->objectName();
 
       if(button->objectName() == "TransmitPlus"){
-          dmrPlusList.push_front(ui->dmrplusCallsign->text().leftJustified(10, ' ') + " --- TG:" + ui->talkgroupplus->text().leftJustified(6, ' ') + " --- Time: " + QTime::currentTime().toString());
+          dmrPlusList.push_front(ui->dmrplusCallsign->text().leftJustified(10, ' ') + " - TG:" + ui->talkgroupplus->text().leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
           dmrPlusModel.setStringList(dmrPlusList);
           ui->dmrPlusHistory->setModel(&dmrPlusModel);
           dmr_plus_previous_src = ui->dmrplusCallsign->text();
       }
 
       if(button->objectName() == "Transmit"){
-          dmrList.push_front(ui->dmrcallsign->text().leftJustified(10, ' ') + " --- TG:" + ui->talkgroup->text().leftJustified(7, ' ') + " --- Time: " + QTime::currentTime().toString());
+          dmrList.push_front(ui->dmrcallsign->text().leftJustified(10, ' ') + " - TG:" + ui->talkgroup->text().leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
           dmrModel.setStringList(dmrList);
           ui->dmrHistory->setModel(&dmrModel);
           dmr_previous_src = ui->dmrid->text();
       }
 
       if(button->objectName() == "ysftransmit"){
-          ysfList.push_front(ui->ysfcallsign->text().leftJustified(10, ' ') + " --- Time: " + QTime::currentTime().toString());
+          ysfList.push_front(ui->ysfcallsign->text().leftJustified(10, ' ') + " - Time: " + QTime::currentTime().toString());
           ysfModel.setStringList(ysfList);
           ui->ysfhistory->setModel(&ysfModel);
           ysf_previous_src = ui->ysfcallsign->text();
@@ -684,7 +684,7 @@ void DigiOne::update_dmr_data(){
 void DigiOne::update_sound_dmr_data(){
     dmr_src = QString::number(m_dmr->get_src());
     if(dmr_src != dmr_previous_src && m_dmrids[m_dmr->get_src()] != ""){
-        dmrList.push_front(m_dmrids[m_dmr->get_src()].leftJustified(10, ' ') + " --- TG:" + QString::number(m_dmr->get_dst()).leftJustified(6, ' ') + " --- Time: " + QTime::currentTime().toString());
+        dmrList.push_front(m_dmrids[m_dmr->get_src()].leftJustified(10, ' ') + " - TG:" + QString::number(m_dmr->get_dst()).leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
         dmrModel.setStringList(dmrList);
         ui->dmrHistory->setModel(&dmrModel);
         dmr_previous_src = dmr_src;
@@ -762,7 +762,7 @@ void DigiOne::update_dcs_data(){
 void DigiOne::update_sound_dcs_data(){
     dcs_src = m_dcs->get_mycall();
     if(dcs_src != dcs_previous_src){
-        dcsList.push_front(dcs_src + " ----- Time: " + QTime::currentTime().toString());
+        dcsList.push_front(dcs_src + " - Time: " + QTime::currentTime().toString());
         dcsModel.setStringList(dcsList);
         ui->DCSHistory->setModel(&dcsModel);
 
@@ -855,7 +855,7 @@ void DigiOne::update_sound_dmr_plus_data(){
     dmr_plus_src = QString::number(m_dmr_plus->get_src());
 
     if(dmr_plus_src != dmr_plus_previous_src && m_dmrids[m_dmr_plus->get_src()] != ""){
-        dmrPlusList.push_front(m_dmrids[m_dmr_plus->get_src()].leftJustified(10, ' ') + " --- TG:" + QString::number(m_dmr_plus->get_dst()).leftJustified(6, ' ') + " --- Time: " + QTime::currentTime().toString());
+        dmrPlusList.push_front(m_dmrids[m_dmr_plus->get_src()].leftJustified(10, ' ') + " - TG:" + QString::number(m_dmr_plus->get_dst()).leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
         dmrPlusModel.setStringList(dmrPlusList);
         ui->dmrPlusHistory->setModel(&dmrPlusModel);
 
@@ -917,7 +917,7 @@ void DigiOne::update_sound_ysf_data(){
     ysf_src = m_ysf->get_src();
 
     if((ysf_src != ysf_previous_src) && !ysf_src.isEmpty() && ysf_src.isSimpleText()){
-        ysfList.push_front(m_ysf->get_src().leftJustified(10, ' ') + " --- Time: " + QTime::currentTime().toString());
+        ysfList.push_front(m_ysf->get_src().leftJustified(10, ' ') + " - Time: " + QTime::currentTime().toString());
         ysfModel.setStringList(ysfList);
         ui->ysfhistory->setModel(&ysfModel);
 
@@ -988,7 +988,7 @@ void DigiOne::update_sound_m17_data(){
     m17_src = m_m17->get_src();
 
     if((m17_src != m17_previous_src) && !m17_src.isEmpty()){
-        m17List.push_front(m_m17->get_src() + " ----- Time: " + QTime::currentTime().toString());
+        m17List.push_front(m_m17->get_src() + " - Time: " + QTime::currentTime().toString());
         m17Model.setStringList(m17List);
         ui->m17history->setModel(&m17Model);
 
@@ -1031,7 +1031,7 @@ void DigiOne::tgid_text_changed_plus(QString s)
 void DigiOne::dmrChangeButtonColor(){
     dmrTimerReceived.stop();
     ui->dmrLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrLast->setText("Ultima recepció");
+    ui->dmrLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
@@ -1041,7 +1041,7 @@ void DigiOne::dmrChangeButtonColor(){
 void DigiOne::dmrPlusChangeButtonColor(){
     dmrPlusTimerReceived.stop();
     ui->dmrPlusLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrPlusLast->setText("Ultima recepció");
+    ui->dmrPlusLast->setText("Última recepció");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -1051,7 +1051,7 @@ void DigiOne::dmrPlusChangeButtonColor(){
 void DigiOne::ysfChangeButtonColor(){
     ysfTimerReceived.stop();
     ui->ysfLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->ysfLast->setText("Ultima recepció");
+    ui->ysfLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -1061,7 +1061,7 @@ void DigiOne::ysfChangeButtonColor(){
 void DigiOne::dcsChangeButtonColor(){
     dcsTimerReceived.stop();
     ui->dcsLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dcsLast->setText("Ultima recepció");
+    ui->dcsLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->m17Last->setText("");
@@ -1071,7 +1071,7 @@ void DigiOne::dcsChangeButtonColor(){
 void DigiOne::m17ChangeButtonColor(){
     m17TimerReceived.stop();
     ui->m17Label->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->m17Last->setText("Ultima recepció");
+    ui->m17Last->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
