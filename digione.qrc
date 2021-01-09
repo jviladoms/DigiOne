@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>images/dstar.ico</file>
+        <file>images/DigiOne_logo_small.jpeg</file>
+        <file>images/DigiOne_logo_small_2.jpeg</file>
     </qresource>
 </RCC>

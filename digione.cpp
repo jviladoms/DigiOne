@@ -26,11 +26,17 @@ DigiOne::DigiOne(QWidget *parent):
     discover_vocoders();
     process_dmr_hosts();
     process_ysf_hosts();
+    qDebug() << "m17";
     process_m17_hosts();
+        qDebug() << "dcs";
     process_dcs_hosts();
+        qDebug() << "dmr_id";
     process_dmr_ids();
+     qDebug() << "initial settings";
     load_initial_settings();
+         qDebug() << "minimum size";
     this->window()->setMinimumSize(1800, 1200);
+          qDebug() << "maximized";
     QWidget::showMaximized();
 }
 
@@ -43,6 +49,14 @@ DigiOne::~DigiOne()
 void DigiOne::load_initial_settings()
 {
     process_settings(config_path + "/settings.conf");
+}
+
+void DigiOne::showTime()
+{
+    QTime time = QTime::currentTime();
+    QString text = time.toString("hh:mm:ss");
+    ui->lcdNumber->display(text);
+    //ui->label_2->setText(text);
 }
 
 void DigiOne::process_settings(QString path)
@@ -152,6 +166,15 @@ void DigiOne::process_settings(QString path)
                 if(sl.at(0) == "USRTXT"){
                     ui->usertext->setText(sl.at(1).simplified());
                 }
+                if(sl.at(0) == "LOCATION"){
+                    ui->poblacio->setText(sl.at(1).simplified());
+                }
+                if(sl.at(0) == "LATITUDE"){
+                    ui->latitud->setText(sl.at(1).simplified());
+                }
+                if(sl.at(0) == "LONGITUDE"){
+                    ui->longitud->setText(sl.at(1).simplified());
+                }
             }
         }
     }
@@ -189,6 +212,10 @@ void DigiOne::init_gui()
     qApp->setPalette(palette);
 
 
+    QTimer *timer = new QTimer(this);
+    timer->start(1000);
+
+    connect(timer, &QTimer::timeout, this, &DigiOne::showTime);
     connect(ui->connect, SIGNAL(clicked()), this, SLOT(process_dmr_connect()));
     connect(ui->dmrPlusConnect, SIGNAL(clicked()), this, SLOT(process_dmr_plus_connect()));
     connect(ui->ysfconnect, SIGNAL(clicked()), this, SLOT(process_ysf_connect()));
@@ -241,23 +268,29 @@ void DigiOne::init_gui()
     ui->ysftransmit->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); } QPushButton:checked{ background-color: red; }");
     ui->m17transmit->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); } QPushButton:checked{ background-color: red; }");
     ui->dcsTransmit->setStyleSheet("QPushButton:enabled { background-color: rgb(128, 195, 66); color: rgb(0,0,0); } QPushButton:checked{ background-color: red; }");
-    ui->muteInAll->setStyleSheet("QPushButton:checked{ background-color: rgb(128, 40, 20); }");
-    ui->muteOutAll->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20); }");
+    ui->muteInAll->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
+    ui->muteOutAll->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
 
-    ui->dmrMute->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20); }");
-    ui->dmrPlusMute->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20) }");
-    ui->ysfMute->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20); }");
-    ui->m17Mute->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20); }");
-    ui->dcsMute->setStyleSheet(" QPushButton:checked{ background-color: rgb(128, 40, 20); }");
+    ui->dmrMute->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
+    ui->dmrPlusMute->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20) }");
+    ui->ysfMute->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
+    ui->m17Mute->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
+    ui->dcsMute->setStyleSheet("QPushButton:checked{ background-color: rgb(255, 255, 20); }");
 
-    ui->lineEdit->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
-    ui->lineEdit_2->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)");
-    ui->lineEdit_3->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
-    ui->lineEdit_4->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
-    ui->lineEdit_5->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
-    ui->lineEdit_6->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)");
-    ui->lineEdit_7->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
-    ui->lineEdit_8->setStyleSheet(" QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit_2->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)");
+    ui->lineEdit_3->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit_4->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit_5->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit_6->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)");
+    ui->lineEdit_7->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+    ui->lineEdit_8->setStyleSheet("QLineEdit:disabled{ background-color: rgb(55, 55, 55)" );
+
+    ui->dmrHistory->setStyleSheet("font-family: Courier;font-size: 10pt;font-weight: bold");
+    ui->dmrPlusHistory->setStyleSheet("font-family: Courier;font-size: 10pt;font-weight: bold");
+    ui->DCSHistory->setStyleSheet("font-family: Courier;font-size: 10pt;font-weight: bold");
+    ui->ysfhistory->setStyleSheet("font-family: Courier;font-size: 10pt;font-weight: bold");
+    ui->m17history->setStyleSheet("font-family: Courier;font-size: 10pt;font-weight: bold");
 
     ui->Transmit->setDisabled(true);
     ui->TransmitPlus->setDisabled(true);
@@ -333,14 +366,14 @@ void DigiOne::cleanM17Log(){
 
 void DigiOne::about()
 {
-    QMessageBox::about(this, tr("Sobre DigiOne v1.1"),
+    QMessageBox::about(this, tr("Sobre DigiOne v1.2"),
                        tr("Aquesta es una distribució de l'eina DigiOne creada per Jordi Viladoms EA3IHG. \n\n S'ha creat a partir "
                           "d'un fork de l'eina dudestar i donant resposta de les funcionalitats i millores suggerides per radioaficionats de Catalunya.\n "
-                          "Agraïment especial als companys Josep EA3FZS i Xavier EA3W per les hores de proves que han fet de l'aplicació. \n\n"
-                          "Aquest programa és programari lliure; el podeu redistribuir i / o modificar sota els termes del GNU General Public "
-                          "license publicada per la Free Software Foundation;\n Aquest programa es distribueix amb l'esperança que serà útil, però SENSE CAP GARANTIA;"
-                          "sense ni tan sols la garantia implícita de COMERCIALITZACIÓ o IDONEITAT PER A FINALITAT PARTICULAR.\n Vegeu la llicència pública general de GNU per més detalls."
-                          "Hauríeu d'haver rebut una còpia del GNU Llicència pública general juntament amb aquest programa.Si no, consulteu <http://www.gnu.org/licenses/>").arg(VERSION_NUMBER));
+                          "Agraïment especial als companys Josep EA3FZS, Xavier EA3W per les hores de proves que han fet de l'aplicació, al company Jordi EA3FET pels seus consells de GUI i al company Jordi EA3HSL per el logo de l'aplicació. \n\n"
+                          "Aquest programa és programari lliure. El podeu redistribuir i/o modificar sota els termes del GNU General Public "
+                          "license publicada per la Free Software Foundation.\n Aquest programa es distribueix amb l'esperança que serà útil, però SENSE CAP GARANTIA,"
+                          " sense ni tan sols la garantia implícita de COMERCIALITZACIÓ o IDONEITAT PER A FINALITAT PARTICULAR.\n Vegeu la llicència pública general de GNU per més detalls."
+                          "Hauríeu d'haver rebut una còpia del GNU Llicència pública general juntament amb aquest programa. Si no, consulteu <http://www.gnu.org/licenses/>").arg(VERSION_NUMBER));
 
 }
 
@@ -364,6 +397,29 @@ void DigiOne::start(bool checked) {
       button->setText("PTT");
       t.stop();
       cronoButton = NULL;
+
+      qDebug() << "object name " + button->objectName();
+
+      if(button->objectName() == "TransmitPlus"){
+          dmrPlusList.push_front(ui->dmrplusCallsign->text().leftJustified(10, ' ') + " - TG:" + ui->talkgroupplus->text().leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
+          dmrPlusModel.setStringList(dmrPlusList);
+          ui->dmrPlusHistory->setModel(&dmrPlusModel);
+          dmr_plus_previous_src = ui->dmrplusCallsign->text();
+      }
+
+      if(button->objectName() == "Transmit"){
+          dmrList.push_front(ui->dmrcallsign->text().leftJustified(10, ' ') + " - TG:" + ui->talkgroup->text().leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
+          dmrModel.setStringList(dmrList);
+          ui->dmrHistory->setModel(&dmrModel);
+          dmr_previous_src = ui->dmrid->text();
+      }
+
+      if(button->objectName() == "ysftransmit"){
+          ysfList.push_front(ui->ysfcallsign->text().leftJustified(10, ' ') + " - Time: " + QTime::currentTime().toString());
+          ysfModel.setStringList(ysfList);
+          ui->ysfhistory->setModel(&ysfModel);
+          ysf_previous_src = ui->ysfcallsign->text();
+      }
 
       if(!ui->Transmit->isChecked() &&
          !ui->TransmitPlus->isChecked() &&
@@ -461,6 +517,9 @@ void DigiOne::save_settings(QString path) {
     stream << "RPTR1:" << ui->rptr1->text().simplified() << ENDLINE;
     stream << "RPTR2:" << ui->rptr2->text().simplified() << ENDLINE;
     stream << "USRTXT:" << ui->usertext->text() << ENDLINE;
+    stream << "LOCATION:" << ui->poblacio->text() << ENDLINE;
+    stream << "LATITUDE:" << ui->latitud->text() << ENDLINE;
+    stream << "LONGITUDE:" << ui->longitud->text() << ENDLINE;
     f.close();
 }
 
@@ -496,10 +555,8 @@ void DigiOne::process_mute_channel(QString channel){
 
     qDebug() << "channel: " << channel;
     if(channel == "DMR"){
-        qDebug() << "dmr status: " << dmr_muted;
         if (dmr_muted == false){
             emit dmr_out_audio_vol_changed(0.0);
-            ui->dmrMute->setText("Desmutejar");
             dmr_muted = true;
         } else {
             emit dmr_out_audio_vol_changed(linear_vol);
@@ -511,7 +568,6 @@ void DigiOne::process_mute_channel(QString channel){
     if(channel == "DMR_PLUS"){
         if (dmr_plus_muted == false){
             emit dmr_plus_out_audio_vol_changed(0.0);
-            ui->dmrPlusMute->setText("Desmutejar");
             dmr_plus_muted = true;
         } else {
             emit dmr_plus_out_audio_vol_changed(linear_vol);
@@ -524,7 +580,6 @@ void DigiOne::process_mute_channel(QString channel){
         if (ysf_muted == false){
             emit ysf_out_audio_vol_changed(0.0);
             ysf_muted = true;
-            ui->ysfMute->setText("Desmutejar");
         } else {
             emit ysf_out_audio_vol_changed(linear_vol);
             ysf_muted = false;
@@ -536,7 +591,6 @@ void DigiOne::process_mute_channel(QString channel){
         if (m17_muted == false){
             emit m17_out_audio_vol_changed(0.0);
             m17_muted = true;
-            ui->m17Mute->setText("Desmutejar");
         } else {
             emit m17_out_audio_vol_changed(linear_vol);
             m17_muted = false;
@@ -548,7 +602,6 @@ void DigiOne::process_mute_channel(QString channel){
         if (dcs_muted == false){
             emit dcs_out_audio_vol_changed(0.0);
             dcs_muted = true;
-            ui->dcsMute->setText("Desmutejar");
         } else {
             emit dcs_out_audio_vol_changed(linear_vol);
             dcs_muted = false;
@@ -566,6 +619,9 @@ void DigiOne::process_dmr_connect(){
         if(ui->Transmit->isChecked()){
             ui->Transmit->click();
         }
+        if(ui->dmrMute->isChecked()){
+            ui->dmrMute->click();
+        }
         ui->Transmit->setDisabled(true);
         ui->dmrOptions->setDisabled(false);
         ui->dmrservers->setDisabled(false);
@@ -582,17 +638,17 @@ void DigiOne::process_dmr_connect(){
 
         QString hostname = ui->dmrservers->currentText().simplified();
         QString callsign = ui->dmrcallsign->text().toUpper();
-        int dmrid = ui->dmrid->text().toUInt();
+        uint32_t dmrid = ui->dmrid->text().toUInt();
         QString dmr_password = ui->password->text();
-        int dmr_destid = ui->talkgroup->text().toUInt();
+        uint32_t dmr_destid = ui->talkgroup->text().toUInt();
         QString dmr_repeater = ui->dmrid->text() + ui->essid->text();
 
         if(hostname.startsWith("DMR+")){
            dmr_options = ui->dmrOptions->text();
-           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText());
+           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         } else {
            dmr_options = "";
-           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText());
+           m_dmr = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         }
 
         m_modethread_dmr = new QThread;
@@ -628,7 +684,7 @@ void DigiOne::update_dmr_data(){
 void DigiOne::update_sound_dmr_data(){
     dmr_src = QString::number(m_dmr->get_src());
     if(dmr_src != dmr_previous_src && m_dmrids[m_dmr->get_src()] != ""){
-        dmrList.push_front(m_dmrids[m_dmr->get_src()] + " ----- TG:" + QString::number(m_dmr->get_dst()) + " ----- Time: " + QTime::currentTime().toString());
+        dmrList.push_front(m_dmrids[m_dmr->get_src()].leftJustified(10, ' ') + " - TG:" + QString::number(m_dmr->get_dst()).leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
         dmrModel.setStringList(dmrList);
         ui->dmrHistory->setModel(&dmrModel);
         dmr_previous_src = dmr_src;
@@ -637,7 +693,7 @@ void DigiOne::update_sound_dmr_data(){
     dmrTimerReceived.start(1000);
     ui->dmrLabel->setStyleSheet("background-color: rgb(0,255,0)");
 
-    ui->dmrLast->setText("REBENT AUDIO....");
+    ui->dmrLast->setText("Rebent Àudio...");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
@@ -652,6 +708,9 @@ void DigiOne::process_dcs_connect(){
         ui->DCSConnect->setText("Connectar");
         if(ui->dcsTransmit->isChecked()){
             ui->dcsTransmit->click();
+        }
+        if(ui->dcsMute->isChecked()){
+            ui->dcsMute->click();
         }
         ui->dcsTransmit->setDisabled(true);
         ui->DCSServers->setDisabled(false);
@@ -703,7 +762,7 @@ void DigiOne::update_dcs_data(){
 void DigiOne::update_sound_dcs_data(){
     dcs_src = m_dcs->get_mycall();
     if(dcs_src != dcs_previous_src){
-        dcsList.push_front(dcs_src + " ----- Time: " + QTime::currentTime().toString());
+        dcsList.push_front(dcs_src + " - Time: " + QTime::currentTime().toString());
         dcsModel.setStringList(dcsList);
         ui->DCSHistory->setModel(&dcsModel);
 
@@ -716,18 +775,22 @@ void DigiOne::update_sound_dcs_data(){
     ui->dmrLast->setText("");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
-    ui->dcsLast->setText("REBENT AUDIO....");
+    ui->dcsLast->setText("Rebent Àudio...");
     ui->m17Last->setText("");
 }
 
 void DigiOne::process_dmr_plus_connect(){
     QString dmr_options;
     if(dmr_plus_connection_status == DMR_PLUS_CONNECTED_RW || dmr_plus_connection_status == DMR_PLUS_CONNECTING){
+        m_dmr_plus->send_disconnect();
         m_modethread_dmr_plus->quit();
         dmr_plus_connection_status = DMR_PLUS_DISCONNECTED;
         ui->dmrPlusConnect->setText("Connectar");
         if(ui->TransmitPlus->isChecked()){
             ui->TransmitPlus->click();
+        }
+        if(ui->dmrPlusMute->isChecked()){
+            ui->dmrPlusMute->click();
         }
         ui->TransmitPlus->setDisabled(true);
         ui->dmrOptionsPlus->setDisabled(false);
@@ -745,17 +808,17 @@ void DigiOne::process_dmr_plus_connect(){
 
         QString hostname = ui->dmrPlusServers->currentText().simplified();
         QString callsign = ui->dmrplusCallsign->text().toUpper();
-        int dmrid = ui->dmridplus->text().toUInt();
+        uint32_t dmrid = ui->dmridplus->text().toUInt();
         QString dmr_password = ui->passwordplus->text();
-        int dmr_destid = ui->talkgroupplus->text().toUInt();
+        uint32_t dmr_destid = ui->talkgroupplus->text().toUInt();
         QString dmr_repeater = ui->dmridplus->text() + ui->essidplus->text();
 
         if(hostname.startsWith("DMR+")){
            dmr_options = ui->dmrOptionsPlus->text();
-           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText());
+           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         } else {
            dmr_options = "";
-           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText());
+           m_dmr_plus = new DMRCodec(callsign, dmrid, dmr_password, dmr_options, dmr_repeater.toUInt(), dmr_destid, host, port, ui->AmbeCombo->currentData().toString().simplified(), ui->AudioInCombo->currentText(), ui->AudioOutCombo->currentText(), hostname, ui->poblacio->text(), ui->latitud->text(), ui->longitud->text());
         }
 
         m_modethread_dmr_plus = new QThread;
@@ -792,7 +855,7 @@ void DigiOne::update_sound_dmr_plus_data(){
     dmr_plus_src = QString::number(m_dmr_plus->get_src());
 
     if(dmr_plus_src != dmr_plus_previous_src && m_dmrids[m_dmr_plus->get_src()] != ""){
-        dmrPlusList.push_front(m_dmrids[m_dmr_plus->get_src()] + " ----- TG:" + QString::number(m_dmr_plus->get_dst()) + " ----- Time: " + QTime::currentTime().toString());
+        dmrPlusList.push_front(m_dmrids[m_dmr_plus->get_src()].leftJustified(10, ' ') + " - TG:" + QString::number(m_dmr_plus->get_dst()).leftJustified(6, ' ') + " - Time: " + QTime::currentTime().toString());
         dmrPlusModel.setStringList(dmrPlusList);
         ui->dmrPlusHistory->setModel(&dmrPlusModel);
 
@@ -803,7 +866,7 @@ void DigiOne::update_sound_dmr_plus_data(){
     ui->dmrPlusLabel->setStyleSheet("background-color: rgb(0,255,0)");
 
     ui->dmrLast->setText("");
-    ui->dmrPlusLast->setText("REBENT AUDIO....");
+    ui->dmrPlusLast->setText("Rebent Àudio...");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -817,6 +880,9 @@ void DigiOne::process_ysf_connect(){
         ui->ysfconnect->setText("Connectar");
         if(ui->ysftransmit->isChecked()){
             ui->ysftransmit->click();
+        }
+        if(ui->ysfMute->isChecked()){
+            ui->ysfMute->click();
         }
         ui->ysftransmit->setDisabled(true);
         ui->ysfcallsign->setDisabled(false);
@@ -851,7 +917,7 @@ void DigiOne::update_sound_ysf_data(){
     ysf_src = m_ysf->get_src();
 
     if((ysf_src != ysf_previous_src) && !ysf_src.isEmpty() && ysf_src.isSimpleText()){
-        ysfList.push_front(m_ysf->get_src() + " ----- Time: " + QTime::currentTime().toString());
+        ysfList.push_front(m_ysf->get_src().leftJustified(10, ' ') + " - Time: " + QTime::currentTime().toString());
         ysfModel.setStringList(ysfList);
         ui->ysfhistory->setModel(&ysfModel);
 
@@ -863,7 +929,7 @@ void DigiOne::update_sound_ysf_data(){
 
     ui->dmrLast->setText("");
     ui->dmrPlusLast->setText("");
-    ui->ysfLast->setText("REBENT AUDIO....");
+    ui->ysfLast->setText("Rebent Àudio...");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
 }
@@ -885,6 +951,9 @@ void DigiOne::process_m17_connect(){
         ui->m17connect->setText("Connectar");
         if(ui->m17transmit->isChecked()){
             ui->m17transmit->click();
+        }
+        if(ui->m17Mute->isChecked()){
+            ui->m17Mute->click();
         }
         ui->m17transmit->setDisabled(true);
         ui->m17callsign->setDisabled(false);
@@ -919,7 +988,7 @@ void DigiOne::update_sound_m17_data(){
     m17_src = m_m17->get_src();
 
     if((m17_src != m17_previous_src) && !m17_src.isEmpty()){
-        m17List.push_front(m_m17->get_src() + " ----- Time: " + QTime::currentTime().toString());
+        m17List.push_front(m_m17->get_src() + " - Time: " + QTime::currentTime().toString());
         m17Model.setStringList(m17List);
         ui->m17history->setModel(&m17Model);
 
@@ -933,7 +1002,7 @@ void DigiOne::update_sound_m17_data(){
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
-    ui->m17Last->setText("REBENT AUDIO....");
+    ui->m17Last->setText("Rebent Àudio...");
 }
 
 void DigiOne::update_m17_data(){
@@ -962,7 +1031,7 @@ void DigiOne::tgid_text_changed_plus(QString s)
 void DigiOne::dmrChangeButtonColor(){
     dmrTimerReceived.stop();
     ui->dmrLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrLast->setText("ULTIMA RECEPCIÓ");
+    ui->dmrLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
@@ -972,7 +1041,7 @@ void DigiOne::dmrChangeButtonColor(){
 void DigiOne::dmrPlusChangeButtonColor(){
     dmrPlusTimerReceived.stop();
     ui->dmrPlusLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dmrPlusLast->setText("ULTIMA RECEPCIÓ");
+    ui->dmrPlusLast->setText("Última recepció");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -982,7 +1051,7 @@ void DigiOne::dmrPlusChangeButtonColor(){
 void DigiOne::ysfChangeButtonColor(){
     ysfTimerReceived.stop();
     ui->ysfLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->ysfLast->setText("ULTIMA RECEPCIÓ");
+    ui->ysfLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->dcsLast->setText("");
     ui->m17Last->setText("");
@@ -992,7 +1061,7 @@ void DigiOne::ysfChangeButtonColor(){
 void DigiOne::dcsChangeButtonColor(){
     dcsTimerReceived.stop();
     ui->dcsLabel->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->dcsLast->setText("ULTIMA RECEPCIÓ");
+    ui->dcsLast->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->m17Last->setText("");
@@ -1002,7 +1071,7 @@ void DigiOne::dcsChangeButtonColor(){
 void DigiOne::m17ChangeButtonColor(){
     m17TimerReceived.stop();
     ui->m17Label->setStyleSheet("background-color: rgb(55, 55, 55)");
-    ui->m17Last->setText("ULTIMA RECEPCIÓ");
+    ui->m17Last->setText("Última recepció");
     ui->dmrPlusLast->setText("");
     ui->ysfLast->setText("");
     ui->dcsLast->setText("");
@@ -1195,7 +1264,7 @@ void DigiOne::update_files(){
     download_file_ysf("/YSFHosts.txt");
     download_file_dmr_ids("/DMRIDs.dat");
 
-    QMessageBox::information(this,tr("Fitxers Actualitzats"),"Tots els fitxers de servidors i ids s'han actualitzat");
+    QMessageBox::information(this,tr("Fitxers Actualitzats"),"Tots els fitxers de servidors i IDs s'han actualitzat");
 }
 
 void DigiOne::download_file_ysf(QString f)

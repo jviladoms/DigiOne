@@ -31,26 +31,124 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="5" column="2">
-     <widget class="QPushButton" name="muteInAll">
-      <property name="text">
-       <string>Silencia audio TX</string>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="8">
-     <layout class="QGridLayout" name="gridLayout_6">
-      <item row="16" column="0" colspan="4">
-       <widget class="QPushButton" name="m17transmit">
+    <item row="5" column="6" colspan="8">
+     <layout class="QGridLayout" name="gridLayout_10">
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/DigiOne_logo_small_2.jpeg&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Decodificador</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLCDNumber" name="lcdNumber">
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="digitCount">
+         <number>8</number>
+        </property>
+        <property name="segmentStyle">
+         <enum>QLCDNumber::Filled</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QComboBox" name="AmbeCombo">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Codificació d'audio</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="5" column="4">
+     <layout class="QGridLayout" name="gridLayout_8">
+      <item row="2" column="0">
+       <widget class="QPushButton" name="muteInAll">
+        <property name="text">
+         <string>Silenciar TX</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Volums</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSlider" name="involSlider">
+        <property name="toolTip">
+         <string>Volum de TX</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="muteOutAll">
+        <property name="text">
+         <string>Silenciar RX</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSlider" name="volumeSlider">
+        <property name="toolTip">
+         <string>Volum de RX</string>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="2">
+     <spacer name="horizontalSpacer_19">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="6" colspan="6">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="13" column="0" colspan="4">
+       <widget class="QPushButton" name="dcsTransmit">
         <property name="text">
          <string>PTT</string>
         </property>
@@ -59,34 +157,296 @@
         </property>
        </widget>
       </item>
-      <item row="8" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_12">
-        <property name="enabled">
-         <bool>false</bool>
+      <item row="17" column="0" colspan="4">
+       <widget class="QListView" name="DCSHistory"/>
+      </item>
+      <item row="16" column="3">
+       <widget class="QPushButton" name="dcsDeleteLog">
+        <property name="text">
+         <string>Esborrar log</string>
         </property>
        </widget>
       </item>
-      <item row="20" column="0" colspan="4">
-       <widget class="QListView" name="m17history"/>
+      <item row="5" column="0" colspan="4">
+       <widget class="QLineEdit" name="urcall">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>UrCall</string>
+        </property>
+       </widget>
       </item>
-      <item row="11" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_7">
-        <property name="enabled">
-         <bool>false</bool>
+      <item row="16" column="0" colspan="3">
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Últims Indicatius RX:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="0" colspan="4">
+       <spacer name="horizontalSpacer_23">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0" colspan="4">
+       <widget class="QLabel" name="dcsLabel">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;D-STAR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
       <item row="4" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_8">
+       <widget class="QLineEdit" name="dcsCallsign">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>MyCall</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="4">
+       <widget class="QLineEdit" name="rptr2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>RPTR2</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="4">
+       <widget class="QLineEdit" name="rptr1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>RPTR1</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="0" colspan="4">
+       <spacer name="horizontalSpacer_22">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="8" column="0" colspan="4">
+       <widget class="QLineEdit" name="usertext">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>D-STAR text</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QComboBox" name="dcsComboMod">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="4">
+       <spacer name="horizontalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QComboBox" name="DCSServers">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="18" column="0" colspan="4">
+       <widget class="QLabel" name="dcsLast">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0" colspan="4">
+       <widget class="QPushButton" name="dcsMute">
+        <property name="text">
+         <string>Silenciar</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0" colspan="4">
+       <widget class="QPushButton" name="DCSConnect">
+        <property name="text">
+         <string>Connectar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0" colspan="4">
+       <widget class="QLineEdit" name="lineEdit_13">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="3" column="0" colspan="4">
-       <widget class="QLineEdit" name="m17callsign">
+     </layout>
+    </item>
+    <item row="0" column="5">
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="12">
+     <widget class="Line" name="line_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="8" column="0" colspan="3">
+       <widget class="QLineEdit" name="dmrOptions">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>Opcions</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="3">
+       <widget class="QLineEdit" name="password">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Contrasenya</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLineEdit" name="dmrid">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>DMR-ID</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0" colspan="3">
+       <widget class="QLineEdit" name="lineEdit_9">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0" colspan="3">
+       <widget class="QPushButton" name="dmrMute">
+        <property name="text">
+         <string>Silenciar</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="20" column="0" colspan="3">
+       <widget class="QLabel" name="dmrLast">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="QLineEdit" name="dmrcallsign">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -96,206 +456,13 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="4">
-       <spacer name="horizontalSpacer_6">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="5" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_5">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="3">
-       <widget class="QComboBox" name="m17servers">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="4">
-       <widget class="QLabel" name="m17Label">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;M17&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="19" column="0" colspan="3">
-       <widget class="QLabel" name="label_10">
-        <property name="text">
-         <string>Ultims Indicatius RX:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="21" column="0" colspan="4">
-       <widget class="QLabel" name="m17Last">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QComboBox" name="m17comboMod">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Selecciona el mòdul D-Star</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0" colspan="4">
-       <widget class="QPushButton" name="m17connect">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+      <item row="13" column="2">
+       <widget class="QCheckBox" name="dmrPrivateCall">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
         </property>
         <property name="text">
-         <string>Connectar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_6">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="19" column="3">
-       <widget class="QPushButton" name="m17DeleteLog">
-        <property name="text">
-         <string>Esborrar log</string>
-        </property>
-       </widget>
-      </item>
-      <item row="15" column="0" colspan="4">
-       <spacer name="horizontalSpacer_28">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="18" column="0" colspan="4">
-       <spacer name="horizontalSpacer_15">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="9" column="0" colspan="4">
-       <widget class="QPushButton" name="m17Mute">
-        <property name="text">
-         <string>Silenciar</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_2">
-      <item row="12" column="0" colspan="3">
-       <widget class="QPushButton" name="connect">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Connectar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="17" column="0" colspan="3">
-       <spacer name="horizontalSpacer_11">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="18" column="2">
-       <widget class="QPushButton" name="dmrDeleteLog">
-        <property name="text">
-         <string>Esborrar log</string>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="0" colspan="3">
-       <spacer name="horizontalSpacer_10">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="essid">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="inputMask">
-         <string>99</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>essid (2 digits)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_9">
-        <property name="enabled">
-         <bool>false</bool>
+         <string>Privat</string>
         </property>
        </widget>
       </item>
@@ -318,26 +485,74 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0" colspan="3">
-       <widget class="QComboBox" name="dmrservers">
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="essid">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="inputMask">
+         <string>99</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>ESSID (2 dígits)</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="0" colspan="3">
-       <widget class="QLineEdit" name="dmrOptions">
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="dmrLabel">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DMR 1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="19" column="0" colspan="3">
+       <widget class="QListView" name="dmrHistory"/>
+      </item>
+      <item row="17" column="0" colspan="3">
+       <spacer name="horizontalSpacer_11">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="14" column="0" colspan="3">
+       <spacer name="horizontalSpacer_10">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="12" column="0" colspan="3">
+       <widget class="QPushButton" name="connect">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="placeholderText">
-         <string>Opcions</string>
+        <property name="text">
+         <string>Connectar</string>
         </property>
        </widget>
       </item>
@@ -354,49 +569,6 @@
         </property>
        </spacer>
       </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QLineEdit" name="dmrid">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Dmr id</string>
-        </property>
-       </widget>
-      </item>
-      <item row="21" column="0" colspan="3">
-       <widget class="QLabel" name="dmrLast">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="2">
-       <widget class="QCheckBox" name="dmrPrivateCall">
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>Privat</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QLineEdit" name="dmrcallsign">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Indicatiu</string>
-        </property>
-       </widget>
-      </item>
       <item row="13" column="0" colspan="2">
        <widget class="QLineEdit" name="talkgroup">
         <property name="sizePolicy">
@@ -410,283 +582,41 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="3">
-       <widget class="QLabel" name="dmrLabel">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DMR 1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::AutoText</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="20" column="0" colspan="3">
-       <widget class="QListView" name="dmrHistory"/>
-      </item>
-      <item row="18" column="0" colspan="2">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Ultims Indicatius RX:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="3">
-       <widget class="QLineEdit" name="password">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="placeholderText">
-         <string>Contrasenya</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="0" colspan="3">
-       <widget class="QPushButton" name="dmrMute">
-        <property name="text">
-         <string>Silenciar</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="2">
-     <layout class="QGridLayout" name="gridLayout_3">
-      <item row="8" column="0" colspan="3">
-       <widget class="QLineEdit" name="dmrOptionsPlus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Opcions</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0" colspan="3">
-       <widget class="QComboBox" name="dmrPlusServers">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="0" colspan="3">
-       <widget class="QPushButton" name="dmrPlusConnect">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Connectar</string>
-        </property>
-       </widget>
-      </item>
-      <item row="20" column="0" colspan="3">
-       <widget class="QListView" name="dmrPlusHistory"/>
-      </item>
-      <item row="6" column="0" colspan="3">
-       <widget class="QLineEdit" name="passwordplus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maxLength">
-         <number>32762</number>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-        <property name="placeholderText">
-         <string>Contrasenya</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="2">
-       <widget class="QCheckBox" name="dmrPlusPrivateCall">
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="text">
-         <string>Privat</string>
-        </property>
-       </widget>
-      </item>
       <item row="18" column="2">
-       <widget class="QPushButton" name="dmrPlusDeleteLog">
+       <widget class="QPushButton" name="dmrDeleteLog">
         <property name="text">
          <string>Esborrar log</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QLineEdit" name="dmridplus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Dmr id</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="essidplus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="inputMask">
-         <string>99</string>
-        </property>
-        <property name="placeholderText">
-         <string>essid</string>
-        </property>
-       </widget>
-      </item>
-      <item row="17" column="0" colspan="3">
-       <spacer name="horizontalSpacer_20">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="0" colspan="3">
-       <spacer name="horizontalSpacer_16">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item row="18" column="0" colspan="2">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Ultims Indicatius RX:</string>
+         <string>Últims Indicatius RX:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="3">
-       <widget class="QLabel" name="dmrPlusLabel">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DMR 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="13" column="0" colspan="2">
-       <widget class="QLineEdit" name="talkgroupplus">
+      <item row="2" column="0" colspan="3">
+       <widget class="QComboBox" name="dmrservers">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>TG</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0" colspan="3">
-       <widget class="QLineEdit" name="lineEdit_10">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="3">
-       <widget class="QLineEdit" name="dmrplusCallsign">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>Indicatiu</string>
-        </property>
-       </widget>
-      </item>
-      <item row="21" column="0" colspan="3">
-       <widget class="QLabel" name="dmrPlusLast">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="15" column="0" colspan="3">
-       <widget class="QPushButton" name="TransmitPlus">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>PTT</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="14" column="0" colspan="3">
-       <spacer name="horizontalSpacer_18">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="11" column="0" colspan="3">
-       <widget class="QPushButton" name="dmrPlusMute">
-        <property name="text">
-         <string>Silenciar</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
         </property>
        </widget>
       </item>
      </layout>
     </item>
-    <item row="6" column="0" colspan="9">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+    <item row="5" column="2">
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Entrada/Sortida </string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QComboBox" name="AudioOutCombo">
         <property name="sizePolicy">
@@ -697,19 +627,6 @@
         </property>
         <property name="toolTip">
          <string>Audio de RX</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="AmbeCombo">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string>Codificació d'audio</string>
         </property>
        </widget>
       </item>
@@ -727,83 +644,6 @@
        </widget>
       </item>
      </layout>
-    </item>
-    <item row="1" column="0">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="4">
-     <spacer name="horizontalSpacer_2">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="7">
-     <widget class="Line" name="line_4">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="3">
-     <widget class="Line" name="line_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <spacer name="horizontalSpacer_17">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>40</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="5">
-     <widget class="Line" name="line_3">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="3" colspan="4">
-     <widget class="QSlider" name="involSlider">
-      <property name="toolTip">
-       <string>Volum de TX</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="Line" name="line">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
     </item>
     <item row="0" column="4">
      <layout class="QGridLayout" name="gridLayout_4">
@@ -853,7 +693,7 @@
       <item row="18" column="0" colspan="2">
        <widget class="QLabel" name="label_8">
         <property name="text">
-         <string>Ultims Indicatius RX:</string>
+         <string>Últims Indicatius RX:</string>
         </property>
        </widget>
       </item>
@@ -979,7 +819,261 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="8">
+    <item row="7" column="0" rowspan="2" colspan="14">
+     <widget class="Line" name="line_6">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="18" column="0" colspan="2">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Últims Indicatius RX:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <spacer name="horizontalSpacer_16">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="18" column="2">
+       <widget class="QPushButton" name="dmrPlusDeleteLog">
+        <property name="text">
+         <string>Esborrar log</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0" colspan="3">
+       <widget class="QLineEdit" name="dmrOptionsPlus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>Opcions</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QLineEdit" name="dmridplus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>DMR-ID</string>
+        </property>
+       </widget>
+      </item>
+      <item row="15" column="0" colspan="3">
+       <widget class="QPushButton" name="TransmitPlus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>PTT</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="13" column="2">
+       <widget class="QCheckBox" name="dmrPlusPrivateCall">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Privat</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="0" colspan="3">
+       <spacer name="horizontalSpacer_20">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="13" column="0" colspan="2">
+       <widget class="QLineEdit" name="talkgroupplus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>TG</string>
+        </property>
+       </widget>
+      </item>
+      <item row="20" column="0" colspan="3">
+       <widget class="QListView" name="dmrPlusHistory"/>
+      </item>
+      <item row="12" column="0" colspan="3">
+       <widget class="QPushButton" name="dmrPlusConnect">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Connectar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="3">
+       <widget class="QLineEdit" name="dmrplusCallsign">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>Indicatiu</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QComboBox" name="dmrPlusServers">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="14" column="0" colspan="3">
+       <spacer name="horizontalSpacer_18">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="10" column="0" colspan="3">
+       <widget class="QLineEdit" name="lineEdit_10">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="3">
+       <widget class="QLineEdit" name="passwordplus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maxLength">
+         <number>32762</number>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Contrasenya</string>
+        </property>
+       </widget>
+      </item>
+      <item row="21" column="0" colspan="3">
+       <widget class="QLabel" name="dmrPlusLast">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="11" column="0" colspan="3">
+       <widget class="QPushButton" name="dmrPlusMute">
+        <property name="text">
+         <string>Silenciar</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QLabel" name="dmrPlusLabel">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;DMR 2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="essidplus">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="inputMask">
+         <string>99</string>
+        </property>
+        <property name="placeholderText">
+         <string>ESSID (2 dígits)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="1">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="13">
      <spacer name="horizontalSpacer_3">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -992,10 +1086,40 @@
       </property>
      </spacer>
     </item>
-    <item row="0" column="6">
-     <layout class="QGridLayout" name="gridLayout_5">
-      <item row="13" column="0" colspan="4">
-       <widget class="QPushButton" name="dcsTransmit">
+    <item row="1" column="0" colspan="14">
+     <widget class="Line" name="line_5">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="13">
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="2" column="0" colspan="3">
+       <widget class="QComboBox" name="m17servers">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="19" column="3">
+       <widget class="QPushButton" name="m17DeleteLog">
+        <property name="text">
+         <string>Esborrar log</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="0" colspan="4">
+       <widget class="QPushButton" name="m17transmit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>PTT</string>
         </property>
@@ -1004,166 +1128,49 @@
         </property>
        </widget>
       </item>
-      <item row="17" column="0" colspan="4">
-       <widget class="QListView" name="DCSHistory"/>
-      </item>
-      <item row="16" column="3">
-       <widget class="QPushButton" name="dcsDeleteLog">
-        <property name="text">
-         <string>Esborrar log</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0" colspan="4">
-       <widget class="QLineEdit" name="urcall">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>URCall</string>
-        </property>
-       </widget>
-      </item>
-      <item row="16" column="0" colspan="3">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>Ultims Indicatius RX:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="15" column="0" colspan="4">
-       <spacer name="horizontalSpacer_23">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="0" colspan="4">
-       <widget class="QLabel" name="dcsLabel">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;D-STAR&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0" colspan="4">
-       <widget class="QLineEdit" name="dcsCallsign">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>MyCall</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0" colspan="4">
-       <widget class="QLineEdit" name="rptr2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>RPTR2</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="4">
-       <widget class="QLineEdit" name="rptr1">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="placeholderText">
-         <string>RPTR1</string>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="0" colspan="4">
-       <spacer name="horizontalSpacer_22">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="8" column="0" colspan="4">
-       <widget class="QLineEdit" name="usertext">
+       <widget class="QLineEdit" name="lineEdit_8">
         <property name="enabled">
          <bool>false</bool>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>D-Star text</string>
         </property>
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QComboBox" name="dcsComboMod">
+       <widget class="QComboBox" name="m17comboMod">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="4">
-       <spacer name="horizontalSpacer_7">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0" colspan="3">
-       <widget class="QComboBox" name="DCSServers">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+        <property name="toolTip">
+         <string>Selecciona el mòdul D-Star</string>
         </property>
        </widget>
       </item>
-      <item row="18" column="0" colspan="4">
-       <widget class="QLabel" name="dcsLast">
+      <item row="8" column="0" colspan="4">
+       <widget class="QLineEdit" name="lineEdit_12">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="21" column="0" colspan="4">
+       <widget class="QLabel" name="m17Last">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
+      <item row="11" column="0" colspan="4">
+       <widget class="QLineEdit" name="lineEdit_7">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item row="9" column="0" colspan="4">
-       <widget class="QPushButton" name="dcsMute">
+       <widget class="QPushButton" name="m17Mute">
         <property name="text">
          <string>Silenciar</string>
         </property>
@@ -1172,34 +1179,138 @@
         </property>
        </widget>
       </item>
-      <item row="10" column="0" colspan="4">
-       <widget class="QPushButton" name="DCSConnect">
-        <property name="text">
-         <string>Connectar</string>
-        </property>
-       </widget>
+      <item row="20" column="0" colspan="4">
+       <widget class="QListView" name="m17history"/>
       </item>
-      <item row="11" column="0" colspan="4">
-       <widget class="QLineEdit" name="lineEdit_13">
+      <item row="5" column="0" colspan="4">
+       <widget class="QLineEdit" name="lineEdit_5">
         <property name="enabled">
          <bool>false</bool>
         </property>
        </widget>
       </item>
+      <item row="15" column="0" colspan="4">
+       <spacer name="horizontalSpacer_28">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" colspan="4">
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="10" column="0" colspan="4">
+       <widget class="QPushButton" name="m17connect">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Connectar</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="4">
+       <widget class="QLabel" name="m17Label">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;M17&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="4">
+       <widget class="QLineEdit" name="m17callsign">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="placeholderText">
+         <string>Indicatiu</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="4">
+       <widget class="QLineEdit" name="lineEdit_6">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="19" column="0" colspan="3">
+       <widget class="QLabel" name="label_10">
+        <property name="text">
+         <string>Últims Indicatius RX:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="18" column="0" colspan="4">
+       <spacer name="horizontalSpacer_15">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </item>
-    <item row="4" column="3" colspan="4">
-     <widget class="QSlider" name="volumeSlider">
-      <property name="toolTip">
-       <string>Volum de RX</string>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
+    <item row="5" column="0">
+     <layout class="QGridLayout" name="gridLayout_9">
+      <item row="0" column="1">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Origen de l'Usuari</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="latitud">
+        <property name="placeholderText">
+         <string>Latitud</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="poblacio">
+        <property name="placeholderText">
+         <string>Població</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="longitud">
+        <property name="placeholderText">
+         <string>Longitud</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </item>
-    <item row="1" column="2">
-     <spacer name="horizontalSpacer_19">
+    <item row="6" column="0" colspan="14">
+     <spacer name="horizontalSpacer_8">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -1211,15 +1322,18 @@
       </property>
      </spacer>
     </item>
-    <item row="4" column="2">
-     <widget class="QPushButton" name="muteOutAll">
-      <property name="text">
-       <string>Silencia audio RX</string>
+    <item row="2" column="10">
+     <spacer name="horizontalSpacer_17">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
       </property>
-      <property name="checkable">
-       <bool>true</bool>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
       </property>
-     </widget>
+     </spacer>
     </item>
    </layout>
   </widget>
@@ -1278,7 +1392,7 @@
   </action>
   <action name="actionUpdateFiles">
    <property name="text">
-    <string>Actualitza fitxers</string>
+    <string>Actualitzar fitxers</string>
    </property>
   </action>
  </widget>
